@@ -1,0 +1,9 @@
+http:
+  port: 8080
+  adminPort: 8081
+
+clusterName: elasticsearch
+node1IP: 127.0.0.1
+node1Port: 9300
+node2IP: 127.0.0.1
+node2Port: 9301
