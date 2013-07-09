@@ -2,21 +2,16 @@ package net.ibogner.elasticsearch.service;
 
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.UUID;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.joda.time.Instant;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.security.SecureRandom;
 import java.util.List;
-import java.util.StringTokenizer;
 import java.util.concurrent.ExecutionException;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
@@ -29,18 +24,11 @@ public class LoadGenerator {
 
     private final Client esClient;
     private final SecureRandom secureRandom;
-    private final BufferedReader reader;
 
     public LoadGenerator(Client esClient) {
         this.esClient = esClient;
         try {
             secureRandom = SecureRandom.getInstance("SHA1PRNG");
-
-            InputStream inputStream = LoadGenerator.class.getResourceAsStream("/boyscouts.txt");
-            reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-            for(int i = 0; i < 724; ++i) { // skip past a bunch of preamble garbage
-                reader.readLine();
-            }
         } catch (Exception e) {
             throw Throwables.propagate(e);
         }
@@ -112,16 +100,8 @@ public class LoadGenerator {
 
     private String generateString(int numWords) throws IOException {
         StringBuilder sb = new StringBuilder();
-        int wordCtr = 0;
-        while (wordCtr < numWords) {
-            String line = StringUtils.trimToNull(reader.readLine());
-            if (line != null) {
-                StringTokenizer tokenizer = new StringTokenizer(line);
-                while (tokenizer.hasMoreElements() && wordCtr < numWords) {
-                    sb.append(tokenizer.nextElement() + " ");
-                    ++wordCtr;
-                }
-            }
+        for (int i = 0; i < numWords; ++i) {
+            sb.append(UUID.randomBase64UUID()).append(" ");
         }
         return sb.toString().trim();
     }
@@ -149,8 +129,11 @@ public class LoadGenerator {
     }
 
     private String getIndexName(int indexNum) {
-        return String.format("exampleidx-%d", indexNum);
+        return String.format("exampleidx-%03d", indexNum);
     }
 
 
+    public void deleteAllIndices() throws ExecutionException, InterruptedException {
+        esClient.admin().indices().prepareDelete(new String[]{}).execute().get();
+    }
 }

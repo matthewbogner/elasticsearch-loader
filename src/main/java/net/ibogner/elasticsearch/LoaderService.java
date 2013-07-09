@@ -5,7 +5,10 @@ import com.google.inject.Injector;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
+import net.ibogner.elasticsearch.config.LoaderConfig;
+import net.ibogner.elasticsearch.managers.LoaderManager;
 import net.ibogner.elasticsearch.resources.LoadResource;
+import net.ibogner.elasticsearch.wiring.LoaderGuiceModule;
 import org.elasticsearch.client.Client;
 
 public class LoaderService extends Service<LoaderConfig> {

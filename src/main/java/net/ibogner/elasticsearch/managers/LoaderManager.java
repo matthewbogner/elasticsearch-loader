@@ -1,4 +1,4 @@
-package net.ibogner.elasticsearch;
+package net.ibogner.elasticsearch.managers;
 
 import com.yammer.dropwizard.lifecycle.Managed;
 import org.elasticsearch.client.Client;

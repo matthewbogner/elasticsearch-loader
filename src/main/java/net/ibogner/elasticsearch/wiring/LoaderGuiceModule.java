@@ -1,6 +1,7 @@
-package net.ibogner.elasticsearch;
+package net.ibogner.elasticsearch.wiring;
 
 import com.google.inject.AbstractModule;
+import net.ibogner.elasticsearch.config.LoaderConfig;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;

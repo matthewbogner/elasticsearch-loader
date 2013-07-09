@@ -1,4 +1,4 @@
-package net.ibogner.elasticsearch;
+package net.ibogner.elasticsearch.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yammer.dropwizard.config.Configuration;
