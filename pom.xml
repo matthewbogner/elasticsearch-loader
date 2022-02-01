@@ -14,7 +14,7 @@
         <slf4j.version>1.6.4</slf4j.version>
         <dropwizard.version>0.6.1</dropwizard.version>
         <metrics.version>2.2.0</metrics.version>
-        <jackson.version>2.1.1</jackson.version>
+        <jackson.version>2.9.10.8</jackson.version>
     </properties>
 
     <licenses>
